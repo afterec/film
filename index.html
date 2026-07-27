@@ -111,19 +111,29 @@
   .split.rev .media .grad{background:linear-gradient(270deg,var(--bg) 0%,transparent 18%)}
   .split .media .fl{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease}
   .split .media .fl.on{opacity:1}
-  /* ---------- painel do mercado (slide 3), gráfico de linha ---------- */
+  /* ---------- painel do mercado (slide 3), dois números ---------- */
   .compare{
     position:absolute;inset:0;background:var(--bg-2);
     display:flex;flex-direction:column;justify-content:center;
     padding:0 3.4vw;
   }
-  .waves{width:100%}
-  .wlegend{display:flex;gap:1.4rem;margin-bottom:1.2rem}
-  .wl{font-size:.72rem;color:var(--ink-dim);display:flex;align-items:center;gap:.45rem;letter-spacing:.04em}
-  .wl i{width:9px;height:9px;border-radius:50%;display:inline-block}
-  .wl.red i{background:#f90000;box-shadow:0 0 10px rgba(249,0,0,.6)}
-  .wl.grey i{background:rgba(244,242,238,.55)}
-  .waves svg{width:100%;height:auto;display:block}
+  .chart{display:grid;grid-template-columns:1fr 1.15fr;gap:2.6rem;align-items:end;width:100%}
+  .ccol{display:flex;flex-direction:column;justify-content:flex-end}
+  .cbig{font-family:var(--sans);font-weight:300;display:block;font-size:clamp(2rem,3.4vw,3.2rem);line-height:1;letter-spacing:-.01em}
+  .ccol.sem .cbig{color:var(--ink-dim)}
+  .ccol.com .cbig{color:var(--red-soft);text-shadow:0 0 34px rgba(249,0,0,.4)}
+  .csub{display:block;font-size:.75rem;color:var(--ink-dim);line-height:1.5;margin-top:.4rem;max-width:24em}
+  .csub em{font-style:normal;color:rgba(244,242,238,.45)}
+  .stem{border-left:1px dashed rgba(244,242,238,.3);margin:.7rem 0 0 5px}
+  .ccol.sem .stem{height:24px}
+  .ccol.com .stem{height:24px;border-color:var(--red-dim)}
+  .cbar{width:100%;clip-path:polygon(0 0,74% 0,100% 26%,100% 100%,0 100%)}
+  .ccol.sem .cbar{height:170px;background:linear-gradient(180deg,rgba(244,242,238,.85) 0,rgba(244,242,238,.22) 4px,rgba(244,242,238,0) 100%)}
+  .ccol.com .cbar{height:236px;background:linear-gradient(180deg,#f90000 0,rgba(249,0,0,.45) 5px,rgba(249,0,0,0) 100%);filter:drop-shadow(0 -6px 30px rgba(249,0,0,.3))}
+  .ccol ul{list-style:none;margin-top:1.2rem;display:flex;flex-direction:column;gap:.45rem}
+  .ccol li{font-size:.78rem;line-height:1.5;color:var(--ink-dim);padding-left:.9rem;position:relative}
+  .ccol li:before{content:'·';position:absolute;left:0;color:var(--red-soft)}
+  .ccol.sem li:before{color:var(--ink-dim)}
   .fonte{margin-top:1.6rem;font-size:.72rem;color:rgba(244,242,238,.45)}
   /* ---------- full-bleed statement ---------- */
   .statement{background:var(--bg)}
@@ -260,7 +270,7 @@
       <img class="logo" src="img/00-logo-branco.png" alt="AfteREC">
       <h1>Film</h1>
       <div class="rule"></div>
-      <p class="sub">Um serviço de produção de cinema, <span class="subq">do videoclipe à longa-metragem.</span></p>
+      <p class="sub">Um serviço de qualquer tipo <span class="subq">de produção cinematográfica.</span></p>
     </div>
   </section>
 
@@ -279,49 +289,35 @@
     <div class="num">03 · O MERCADO</div>
     <div class="media">
       <div class="compare">
-        <div class="waves">
-          <div class="wlegend">
-            <span class="wl grey"><i></i>Anúncios que usam humor (% do total)</span>
+        <div class="chart">
+          <div class="ccol sem">
+            <span class="cbig">10 em 10</span>
+            <span class="csub">os maiores filmes de 2024 no mundo foram todos sequelas: a primeira vez na história do cinema</span>
+            <div class="stem"></div>
+            <div class="cbar"></div>
+            <ul>
+              <li>Nenhum filme original entrou no top 15</li>
+              <li>O mercado nunca produziu tanto igual</li>
+            </ul>
           </div>
-          <svg viewBox="0 0 720 470" role="img" aria-label="O humor na publicidade caiu cerca de 20 pontos em 20 anos; anúncios com humor são 47% mais memoráveis">
-            <defs>
-              <linearGradient id="gGrey" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#f4f2ee" stop-opacity=".38"/>
-                <stop offset="1" stop-color="#f4f2ee" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-            <g stroke="rgba(244,242,238,.09)" stroke-width="1">
-              <line x1="60" y1="110" x2="700" y2="110"/>
-              <line x1="60" y1="210" x2="700" y2="210"/>
-              <line x1="60" y1="310" x2="700" y2="310"/>
-            </g>
-            <g font-family="Archivo,Arial,sans-serif" font-size="13" fill="rgba(244,242,238,.35)">
-              <text x="26" y="114">55%</text>
-              <text x="26" y="214">45%</text>
-              <text x="26" y="314">35%</text>
-              <text x="60" y="462">2004</text>
-              <text x="365" y="462">2014</text>
-              <text x="662" y="462">2024</text>
-            </g>
-            <path d="M60,120 C110,126 150,138 200,152 C260,169 310,182 380,205 C450,228 510,258 570,290 C615,314 660,330 700,338 L700,440 L60,440 Z" fill="url(#gGrey)"/>
-            <path d="M60,120 C110,126 150,138 200,152 C260,169 310,182 380,205 C450,228 510,258 570,290 C615,314 660,330 700,338" fill="none" stroke="rgba(244,242,238,.55)" stroke-width="2"/>
-            <circle cx="700" cy="338" r="4.5" fill="#f90000" filter="drop-shadow(0 0 10px rgba(249,0,0,.6))"/>
-            <g font-family="Archivo,Arial,sans-serif" font-size="13.5" fill="rgba(244,242,238,.72)">
-              <text x="80" y="255">O humor na publicidade caiu</text>
-              <text x="80" y="273">cerca de 20 pontos em 20 anos:</text>
-              <text x="80" y="291">hoje só 1 em cada 3 anúncios o usa.</text>
-              <text x="80" y="330" fill="#ff3b30">E no entanto, um anúncio com humor</text>
-              <text x="80" y="348" fill="#ff3b30">é 47% mais memorável do que um sério.</text>
-            </g>
-          </svg>
-          <p class="fonte">Fontes: Kantar, evolução do humor na publicidade. Nielsen/Kantar, memorização de anúncios com humor.</p>
+          <div class="ccol com">
+            <span class="cbig">$11M → $260M</span>
+            <span class="csub">Parasite: um tema atual (a desigualdade) contado de forma nova, e o primeiro Óscar de Melhor Filme em língua não inglesa</span>
+            <div class="stem"></div>
+            <div class="cbar"></div>
+            <ul>
+              <li>Get Out: $4,5M de orçamento → $255M</li>
+              <li>O público recompensa o que é culturalmente distinto</li>
+            </ul>
+          </div>
         </div>
+        <p class="fonte">Fontes: bilheteira mundial de 2024 (Comscore/Box Office Mojo); Box Office Mojo, Parasite e Get Out; UTA IQ, estudo de audiências.</p>
       </div>
     </div>
     <div class="text">
       <div class="kicker">Porque é que isto importa</div>
       <h2>Num mercado saturado, ninguém se lembra <em>do que é igual</em>.</h2>
-      <p class="body">Todos os minutos entram <strong>mais de 700 horas de vídeo</strong> só no YouTube. O público vê mais conteúdo do que nunca, e lembra-se de cada vez menos. Ao mesmo tempo, a publicidade tornou-se séria: o humor caiu 20 pontos em 20 anos e hoje só um terço dos anúncios o usa (Kantar).<br><br>Os números mostram o custo dessa seriedade: <strong>um anúncio com humor é 47% mais memorável</strong> (Nielsen/Kantar), e metade dos vencedores dos prémios de eficácia criativa da Kantar usa-o. A maior oportunidade do audiovisual está exatamente onde a maioria deixou de olhar: <strong>o que é diferente é o que fica na memória</strong>.</p>
+      <p class="body">O cinema nunca produziu tanto igual: em 2024, pela primeira vez na história, <strong>os 10 maiores filmes do ano no mundo foram todos sequelas</strong>, e nenhum filme original entrou sequer no top 15. Quando tudo se parece, o público vê, esquece e segue em frente.<br><br>E no entanto, os filmes que marcam esta década fazem o contrário: pegam em <strong>temas atuais e contam-nos de uma forma que ninguém tinha visto</strong>. Parasite transformou 11 milhões de dólares de orçamento em 260 e levou o Óscar de Melhor Filme; Get Out transformou 4,5 em 255. A audiência recompensa o que é culturalmente distinto: <strong>o que é diferente é o que fica na memória</strong>.</p>
     </div>
   </section>
 
@@ -400,7 +396,7 @@
     <div class="text">
       <div class="kicker">Documentários, curtas, longas e séries</div>
       <h2>Histórias com <em>fôlego de cinema</em>.</h2>
-      <p class="body">Os formatos maiores pedem outra estrutura, e nós montamo-la. No documentário, a pesquisa conduz a história: acompanhamos a realidade com equipa dimensionada ao projeto e uma pós-produção onde a narrativa se encontra. Nas curtas, longas e séries, a AfteREC assume a <strong>produção executiva</strong>: desenvolvimento, procura de financiamento, materiais de apresentação e, no fim, a distribuição para festivais e cinemas.<br><br>São projetos de meses, não de semanas, e é para isso que existem: <strong>uma obra que fica</strong>, e que continua a trabalhar pela sua marca, pela sua música ou pela sua história muito depois da estreia.</p>
+      <p class="body">Os formatos maiores pedem outra estrutura, e nós montamo-la. No documentário, a pesquisa conduz a história. Nas curtas, longas e séries, a AfteREC assume a <strong>produção executiva</strong>: desenvolvimento, materiais de apresentação e, no fim, a distribuição para festivais e cinemas.<br><br>O <strong>financiamento</strong> é o que decide se uma boa ideia avança, e trabalhamos dos dois lados: se já existe, entramos a partir daí e produzimos; se ainda não existe, <strong>procuramo-lo consigo</strong>, preparamos a apresentação da ideia e levamo-la aos mercados e fundos certos. E antes de tudo, lemos a ideia: quando vemos onde pode melhorar, sugerimos as melhorias, porque é isso que aumenta as hipóteses de financiamento e o impacto da obra final.</p>
     </div>
     <div class="media">
       <div class="bgimg" style="background-image:url('img/08-cinema.jpg')"></div>
@@ -434,7 +430,7 @@
       <h2>Cada projeto tem a sua escala, <em>e o seu ponto de partida</em>.</h2>
       <div class="tip-grid">
         <div class="tip"><h4>Vídeos de YouTube</h4><div class="preco">desde €1.500</div><div class="desc">Produção, captação e montagem, com escala ajustada ao formato e à frequência.</div></div>
-        <div class="tip"><h4>Videoclipes</h4><div class="preco">desde €2.500</div><div class="desc">Equipa de cinema, captação e montagem, com variação conforme o look e a complexidade.</div></div>
+        <div class="tip"><h4>Videoclipes</h4><div class="preco">desde €3.000</div><div class="desc">Equipa de cinema, captação e montagem. A maioria fecha entre €3.000 e €5.000+ por clipe, conforme a complexidade.</div></div>
         <div class="tip"><h4>Documentários</h4><div class="preco">desde €6.000</div><div class="desc">Produção, realização e captação, com uma pós-produção mais extensa.</div></div>
         <div class="tip"><h4>Curtas-metragens</h4><div class="preco">desde €10.000</div><div class="desc">Produção completa e pós completa: montagem, som, cor e masters.</div></div>
         <div class="tip"><h4>Transmédia</h4><div class="preco">desde €10.000</div><div class="desc">Produção multi-formatos, coordenação editorial e versões por canal.</div></div>
