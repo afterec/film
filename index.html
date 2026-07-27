@@ -71,6 +71,7 @@
   a.back:hover{color:var(--red-soft);border-color:var(--red-dim)}
   /* ---------- hero (capa + final) ---------- */
   .hero .bgimg{position:absolute;inset:0;background-size:cover;background-position:center;}
+  .hero .bgvideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .hero .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,22,24,.3) 0%,rgba(22,22,24,.55) 55%,rgba(22,22,24,.92) 100%)}
   .hero .content{position:relative;z-index:2;text-align:center;padding:0 6vw}
   .hero h1,.hero h2,.hero .sub,.hero p.body{text-shadow:0 2px 28px rgba(0,0,0,.65)}
@@ -111,29 +112,24 @@
   .split.rev .media .grad{background:linear-gradient(270deg,var(--bg) 0%,transparent 18%)}
   .split .media .fl{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease}
   .split .media .fl.on{opacity:1}
-  /* ---------- painel do mercado (slide 3), dois números ---------- */
+  .media-v2{position:absolute;inset:0;display:grid;grid-template-rows:1fr 1fr;gap:10px}
+  .media-v2 .m{position:relative;overflow:hidden;background:var(--bg-2)}
+  .media-v2 .m .bgvideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  /* ---------- painel do mercado (slide 3), dois factos ---------- */
   .compare{
     position:absolute;inset:0;background:var(--bg-2);
     display:flex;flex-direction:column;justify-content:center;
     padding:0 3.4vw;
   }
-  .chart{display:grid;grid-template-columns:1fr 1.15fr;gap:2.6rem;align-items:end;width:100%}
-  .ccol{display:flex;flex-direction:column;justify-content:flex-end}
-  .cbig{font-family:var(--sans);font-weight:300;display:block;font-size:clamp(2rem,3.4vw,3.2rem);line-height:1;letter-spacing:-.01em}
-  .ccol.sem .cbig{color:var(--ink-dim)}
-  .ccol.com .cbig{color:var(--red-soft);text-shadow:0 0 34px rgba(249,0,0,.4)}
-  .csub{display:block;font-size:.75rem;color:var(--ink-dim);line-height:1.5;margin-top:.4rem;max-width:24em}
-  .csub em{font-style:normal;color:rgba(244,242,238,.45)}
-  .stem{border-left:1px dashed rgba(244,242,238,.3);margin:.7rem 0 0 5px}
-  .ccol.sem .stem{height:24px}
-  .ccol.com .stem{height:24px;border-color:var(--red-dim)}
-  .cbar{width:100%;clip-path:polygon(0 0,74% 0,100% 26%,100% 100%,0 100%)}
-  .ccol.sem .cbar{height:170px;background:linear-gradient(180deg,rgba(244,242,238,.85) 0,rgba(244,242,238,.22) 4px,rgba(244,242,238,0) 100%)}
-  .ccol.com .cbar{height:236px;background:linear-gradient(180deg,#f90000 0,rgba(249,0,0,.45) 5px,rgba(249,0,0,0) 100%);filter:drop-shadow(0 -6px 30px rgba(249,0,0,.3))}
-  .ccol ul{list-style:none;margin-top:1.2rem;display:flex;flex-direction:column;gap:.45rem}
-  .ccol li{font-size:.78rem;line-height:1.5;color:var(--ink-dim);padding-left:.9rem;position:relative}
-  .ccol li:before{content:'·';position:absolute;left:0;color:var(--red-soft)}
-  .ccol.sem li:before{color:var(--ink-dim)}
+  .facts{display:flex;flex-direction:column;gap:2.4rem;width:100%}
+  .fact{border-left:3px solid;padding-left:1.6rem}
+  .fact.a{border-color:#ff7a45}
+  .fact.b{border-color:var(--red)}
+  .fact .fbig{font-family:var(--sans);font-weight:300;display:block;font-size:clamp(2.4rem,4.2vw,3.8rem);line-height:1.05;letter-spacing:-.01em}
+  .fact.a .fbig{color:#ff7a45;text-shadow:0 0 30px rgba(255,122,69,.35)}
+  .fact.b .fbig{color:var(--red-soft);text-shadow:0 0 30px rgba(249,0,0,.4)}
+  .fact .fsub{display:block;font-size:clamp(.82rem,1vw,.95rem);color:var(--ink);line-height:1.55;margin-top:.55rem;max-width:34em}
+  .fact .fnote{display:block;font-size:.75rem;color:var(--ink-dim);line-height:1.5;margin-top:.35rem;max-width:36em}
   .fonte{margin-top:1.6rem;font-size:.72rem;color:rgba(244,242,238,.45)}
   /* ---------- full-bleed statement ---------- */
   .statement{background:var(--bg)}
@@ -264,7 +260,9 @@
 
   <!-- 01 · CAPA -->
   <section class="slide hero capa" id="s1">
-    <div class="bgimg" style="background-image:url('img/01-capa.jpg')"></div>
+    <video class="bgvideo" autoplay muted loop playsinline poster="img/01-capa.jpg">
+      <source src="video/01-capa.mp4" type="video/mp4">
+    </video>
     <div class="veil"></div>
     <div class="content">
       <img class="logo" src="img/00-logo-branco.png" alt="AfteREC">
@@ -289,26 +287,16 @@
     <div class="num">03 · O MERCADO</div>
     <div class="media">
       <div class="compare">
-        <div class="chart">
-          <div class="ccol sem">
-            <span class="cbig">10 em 10</span>
-            <span class="csub">os maiores filmes de 2024 no mundo foram todos sequelas: a primeira vez na história do cinema</span>
-            <div class="stem"></div>
-            <div class="cbar"></div>
-            <ul>
-              <li>Nenhum filme original entrou no top 15</li>
-              <li>O mercado nunca produziu tanto igual</li>
-            </ul>
+        <div class="facts">
+          <div class="fact a">
+            <span class="fbig">10 em 10</span>
+            <span class="fsub">Os 10 maiores filmes de 2024 no mundo foram todos sequelas.</span>
+            <span class="fnote">Primeira vez na história do cinema. Nenhum filme original entrou sequer no top 15.</span>
           </div>
-          <div class="ccol com">
-            <span class="cbig">$11M → $260M</span>
-            <span class="csub">Parasite: um tema atual (a desigualdade) contado de forma nova, e o primeiro Óscar de Melhor Filme em língua não inglesa</span>
-            <div class="stem"></div>
-            <div class="cbar"></div>
-            <ul>
-              <li>Get Out: $4,5M de orçamento → $255M</li>
-              <li>O público recompensa o que é culturalmente distinto</li>
-            </ul>
+          <div class="fact b">
+            <span class="fbig">23×</span>
+            <span class="fsub">Parasite devolveu 23 vezes o orçamento: $11M custou, $260M rendeu.</span>
+            <span class="fnote">Um tema atual (a desigualdade) contado de forma nova, e o Óscar de Melhor Filme. Get Out fez o mesmo: $4,5M → $255M, 56 vezes o orçamento.</span>
           </div>
         </div>
         <p class="fonte">Fontes: bilheteira mundial de 2024 (Comscore/Box Office Mojo); Box Office Mojo, Parasite e Get Out; UTA IQ, estudo de audiências.</p>
@@ -381,8 +369,19 @@
     <div class="num">07 · PUBLICIDADE</div>
     <a class="back" href="#s5">← O que produzimos</a>
     <div class="media">
-      <div class="bgimg" style="background-image:url('img/07-publicidade.jpg')"></div>
-      <div class="grad"></div>
+      <div class="media-v2">
+        <div class="m">
+          <video class="bgvideo" autoplay muted loop playsinline poster="img/07-pub-a.jpg">
+            <source src="video/07-pub-a.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="m">
+          <video class="bgvideo" autoplay muted loop playsinline poster="img/07-pub-b.jpg">
+            <source src="video/07-pub-b.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="grad" style="z-index:500"></div>
     </div>
     <div class="text">
       <div class="kicker">Publicidade, spots e vídeos de YouTube</div>
@@ -401,8 +400,12 @@
       <p class="body">Os formatos maiores pedem outra estrutura, e nós montamo-la. No documentário, a pesquisa conduz a história. Nas curtas, longas e séries, a AfteREC assume a <strong>produção executiva</strong>: desenvolvimento, materiais de apresentação e, no fim, a distribuição para festivais e cinemas.<br><br>O <strong>financiamento</strong> é o que decide se uma boa ideia avança, e trabalhamos dos dois lados: se já existe, entramos a partir daí e produzimos; se ainda não existe, <strong>procuramo-lo consigo</strong>, preparamos a apresentação da ideia e levamo-la aos mercados e fundos certos. E antes de tudo, lemos a ideia: quando vemos onde pode melhorar, sugerimos as melhorias, porque é isso que aumenta as hipóteses de financiamento e o impacto da obra final.</p>
     </div>
     <div class="media">
-      <div class="bgimg" style="background-image:url('img/08-cinema.jpg')"></div>
-      <div class="grad"></div>
+      <div class="fadeset" style="position:absolute;inset:0">
+        <div class="fl on" style="background-image:url('img/08-cinema.jpg');z-index:1"></div>
+        <div class="fl" style="background-image:url('img/08-bts-b.jpg')"></div>
+        <div class="fl" style="background-image:url('img/08-bts-c.jpg')"></div>
+      </div>
+      <div class="grad" style="z-index:500"></div>
     </div>
   </section>
 
