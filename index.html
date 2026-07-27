@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AfteREC Film — Apresentação do Serviço</title>
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#161618;
+    --bg-2:#1e1e21;
+    --ink:#f4f2ee;
+    --ink-dim:#b6b3ad;
+    --red:#f90000;
+    --red-soft:#ff3b30;
+    --red-dim:rgba(249,0,0,.4);
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --sans:'Inter',-apple-system,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:var(--sans);font-weight:300;
+    overflow-x:hidden;
+  }
+  main{
+    height:100vh;overflow-y:scroll;
+    scroll-snap-type:y mandatory;
+  }
+  section.slide{
+    height:100vh;width:100%;
+    scroll-snap-align:start;scroll-snap-stop:always;
+    position:relative;display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  .kicker{
+    font-family:var(--sans);font-size:.72rem;font-weight:500;
+    letter-spacing:.32em;text-transform:uppercase;color:var(--red-soft);
+    margin-bottom:1.6rem;
+  }
+  h1,h2{font-family:var(--serif);font-weight:300;line-height:1.08}
+  h1{font-size:clamp(2.8rem,6.2vw,5.4rem)}
+  h2{font-size:clamp(2rem,4.2vw,3.6rem);margin-bottom:1.6rem}
+  h2 em{font-style:italic;color:var(--red-soft)}
+  p.body{
+    font-size:clamp(.95rem,1.25vw,1.12rem);line-height:1.75;
+    color:var(--ink-dim);max-width:36em;
+  }
+  p.body strong{color:var(--ink);font-weight:400}
+  .num{
+    position:absolute;top:2.4rem;left:3rem;z-index:5;
+    font-family:var(--sans);font-size:.7rem;letter-spacing:.25em;
+    color:rgba(244,242,238,.4);
+  }
+  /* ---------- botão voltar ao menu de conteúdos ---------- */
+  a.back{
+    position:absolute;top:2.2rem;right:3rem;z-index:6;
+    font-family:var(--sans);font-size:.68rem;font-weight:500;
+    letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-dim);text-decoration:none;
+    border:1px solid rgba(244,242,238,.2);border-radius:2rem;
+    padding:.55rem 1.2rem;background:rgba(22,22,24,.55);backdrop-filter:blur(4px);
+    transition:color .2s,border-color .2s;
+  }
+  a.back:hover{color:var(--red-soft);border-color:var(--red-dim)}
+  /* ---------- hero (capa + final) ---------- */
+  .hero .bgimg{position:absolute;inset:0;background-size:cover;background-position:center;}
+  .hero .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,22,24,.3) 0%,rgba(22,22,24,.55) 55%,rgba(22,22,24,.92) 100%)}
+  .hero .content{position:relative;z-index:2;text-align:center;padding:0 6vw}
+  .hero h1,.hero h2,.hero .sub,.hero p.body{text-shadow:0 2px 28px rgba(0,0,0,.65)}
+  .rule{width:56px;height:1px;background:var(--red);margin:2.2rem auto}
+  .hero .sub{font-family:var(--serif);font-style:italic;font-size:clamp(1.1rem,2vw,1.6rem);color:var(--ink)}
+  /* capa: alinhada à esquerda e ao topo, com animação de entrada */
+  section.slide.capa{align-items:flex-start}
+  .capa .veil{background:linear-gradient(90deg,rgba(22,22,24,.78) 0%,rgba(22,22,24,.38) 42%,rgba(22,22,24,.04) 72%),linear-gradient(180deg,transparent 55%,rgba(22,22,24,.82) 100%)}
+  .capa .content{width:100%;max-width:1280px;padding:0 7vw;text-align:left;margin-top:9vh}
+  @keyframes fadeup{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  .capa .logo,.capa h1,.capa .rule,.capa .sub{opacity:0;animation:fadeup .9s ease forwards}
+  .capa .logo{animation-delay:.15s}
+  .capa h1{animation-delay:.45s}
+  .capa .rule{animation-delay:.7s}
+  .capa .sub{animation-delay:.9s}
+  .capa .logo{width:min(280px,46vw);height:auto;display:block;margin:0 0 .9rem}
+  .capa h1{
+    font-family:var(--sans);font-weight:400;
+    font-size:clamp(.95rem,1.6vw,1.35rem);
+    letter-spacing:.58em;text-transform:uppercase;color:var(--ink);
+    margin-left:.15em;
+  }
+  .capa .rule{margin:2rem 0}
+  /* ---------- split layout ---------- */
+  /* section.slide (flex) tem especificidade maior que .split; este seletor garante o grid.
+     align-items:stretch é obrigatório: o center herdado do slide colapsa o painel de media
+     (que só tem filhos absolutos) para altura zero. */
+  section.slide.split{display:grid;grid-template-columns:47% 53%;grid-template-rows:100%;align-items:stretch;justify-content:stretch;width:100%;height:100%}
+  .split .text{
+    display:flex;flex-direction:column;justify-content:center;
+    padding:0 4.5vw;background:var(--bg);
+  }
+  .split .media{position:relative;background:var(--bg-2)}
+  .split .media .bgimg{position:absolute;inset:0;background-size:cover;background-position:center}
+  .split .media .bgvideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .split .media .grad{position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,transparent 18%)}
+  section.slide.split.rev{grid-template-columns:53% 47%}
+  .split.rev .media .grad{background:linear-gradient(270deg,var(--bg) 0%,transparent 18%)}
+  .split .media .fl{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease}
+  .split .media .fl.on{opacity:1}
+  /* ---------- painel do mercado (slide 3), gráfico de linha ---------- */
+  .compare{
+    position:absolute;inset:0;background:var(--bg-2);
+    display:flex;flex-direction:column;justify-content:center;
+    padding:0 3.4vw;
+  }
+  .waves{width:100%}
+  .wlegend{display:flex;gap:1.4rem;margin-bottom:1.2rem}
+  .wl{font-size:.72rem;color:var(--ink-dim);display:flex;align-items:center;gap:.45rem;letter-spacing:.04em}
+  .wl i{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .wl.red i{background:#f90000;box-shadow:0 0 10px rgba(249,0,0,.6)}
+  .wl.grey i{background:rgba(244,242,238,.55)}
+  .waves svg{width:100%;height:auto;display:block}
+  .fonte{margin-top:1.6rem;font-size:.72rem;color:rgba(244,242,238,.45)}
+  /* ---------- full-bleed statement ---------- */
+  .statement{background:var(--bg)}
+  .statement .content{max-width:1040px;padding:0 2rem;text-align:center}
+  .statement p.body{margin:0 auto}
+  /* ---------- menu slide ---------- */
+  .menu-wrap{max-width:1080px;width:100%;padding:0 6vw}
+  .menu-cols{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:2.5rem}
+  .menu-col h3{
+    font-family:var(--sans);font-size:.72rem;font-weight:600;
+    letter-spacing:.3em;text-transform:uppercase;color:var(--red-soft);
+    margin-bottom:1.4rem;
+  }
+  .menu-col ul{list-style:none}
+  .menu-col li{border-bottom:1px solid rgba(244,242,238,.09)}
+  .menu-col li a{
+    font-family:var(--sans);font-weight:400;
+    font-size:clamp(.92rem,1.15vw,1.06rem);letter-spacing:.02em;
+    padding:.75rem 0;color:var(--ink);text-decoration:none;
+    display:flex;justify-content:space-between;align-items:baseline;
+    transition:color .2s,padding-left .2s;
+  }
+  .menu-col li a:after{
+    content:'→';font-size:.85rem;color:var(--red-dim);
+    opacity:0;transition:opacity .2s;
+  }
+  .menu-col li a:hover{color:var(--red-soft);padding-left:.4rem}
+  .menu-col li a:hover:after{opacity:1}
+  .menu-note{margin-top:2.6rem;color:var(--ink-dim);font-size:clamp(.9rem,1.1vw,1rem);line-height:1.7}
+  .menu-note a{color:var(--red-soft);text-decoration:none;border-bottom:1px solid var(--red-dim)}
+  /* ---------- process ---------- */
+  .process .content{max-width:1080px;width:100%;padding:0 6vw}
+  .timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:3rem 0 2.4rem;position:relative}
+  .timeline:before{content:'';position:absolute;top:7px;left:2%;right:2%;height:1px;background:var(--red-dim)}
+  .step{position:relative;padding:2rem 1.2rem 0 0}
+  .step:before{content:'';position:absolute;top:0;left:0;width:15px;height:15px;border-radius:50%;border:1px solid var(--red-soft);background:var(--bg)}
+  .step h4{font-family:var(--serif);font-weight:400;font-size:1.35rem;margin-bottom:.5rem}
+  .step p{font-size:.8rem;line-height:1.6;color:var(--ink-dim)}
+  .badge{
+    display:inline-block;border:1px solid var(--red-dim);border-radius:1.4rem;
+    padding:.6rem 1.6rem;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red-soft);
+    text-align:center;line-height:1.5;
+  }
+  .badge small{display:block;font-size:.6rem;letter-spacing:.16em;color:var(--ink-dim)}
+  /* ---------- valores por formato ---------- */
+  .pacotes .content{max-width:1180px;width:100%;padding:0 5vw}
+  .tip-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:2.6rem}
+  .tip{
+    border:1px solid rgba(244,242,238,.13);border-radius:4px;
+    padding:1.5rem 1.3rem;display:flex;flex-direction:column;gap:.5rem;
+    background:var(--bg-2);
+  }
+  .tip h4{font-family:var(--serif);font-weight:400;font-size:1.35rem;line-height:1.15}
+  .tip .preco{font-family:var(--sans);font-size:.88rem;font-weight:500;color:var(--red-soft);letter-spacing:.04em}
+  .tip .desc{font-size:.78rem;line-height:1.55;color:var(--ink-dim)}
+  .pk-note{margin-top:2.2rem;font-size:.85rem;line-height:1.7;color:var(--ink-dim);max-width:52em}
+  .pk-note a{color:var(--red-soft);text-decoration:none;border-bottom:1px solid var(--red-dim)}
+  /* ---------- chips ---------- */
+  .ramify{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2.4rem}
+  .chip{
+    border:1px solid rgba(244,242,238,.16);border-radius:2rem;
+    padding:.5rem 1.2rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);
+  }
+  /* ---------- CTA final ---------- */
+  .cta .veil{background:linear-gradient(180deg,rgba(22,22,24,.55) 0%,rgba(22,22,24,.75) 50%,rgba(22,22,24,.94) 100%)}
+  .cta .content{position:relative;z-index:2;text-align:center;padding:0 6vw;max-width:860px}
+  .btn{
+    display:inline-block;margin-top:2.6rem;
+    background:var(--red);color:#fff;text-decoration:none;
+    font-family:var(--sans);font-weight:500;font-size:.8rem;
+    letter-spacing:.22em;text-transform:uppercase;
+    padding:1.1rem 2.8rem;border-radius:2px;
+    transition:opacity .25s;
+  }
+  .btn:hover{opacity:.85}
+  .contacts{margin-top:2.8rem;font-size:.85rem;letter-spacing:.06em;color:var(--ink-dim);line-height:2}
+  .contacts a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--red-dim)}
+  /* ---------- seta de continuar ---------- */
+  a.downarrow{
+    position:fixed;bottom:1.6rem;left:50%;transform:translateX(-50%);
+    z-index:60;width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+    color:var(--ink);opacity:.85;transition:opacity .3s,color .2s;
+    animation:arrowfloat 2.2s ease-in-out infinite;
+  }
+  a.downarrow:hover{color:var(--red-soft)}
+  a.downarrow.hidden{opacity:0;pointer-events:none}
+  a.downarrow svg{width:26px;height:26px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.6))}
+  @keyframes arrowfloat{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+  /* ---------- dots nav ---------- */
+  nav.dots{
+    position:fixed;right:1.4rem;top:50%;transform:translateY(-50%);
+    z-index:50;display:flex;flex-direction:column;gap:.7rem;
+  }
+  nav.dots a{width:7px;height:7px;border-radius:50%;background:rgba(244,242,238,.25);transition:.2s}
+  nav.dots a.active{background:var(--red);transform:scale(1.35)}
+  /* ---------- responsive (telemóvel: página fluida, sem slides fixos) ---------- */
+  @media(max-width:860px){
+    main{height:auto;overflow-y:visible;scroll-snap-type:none}
+    section.slide{height:auto;min-height:0;scroll-snap-align:none;scroll-snap-stop:normal;padding:4.5rem 0 3.5rem}
+    section.slide.hero{height:100vh;height:100svh;min-height:540px;padding:0}
+    .hero .bgimg{background-position:65% center}
+    /* split: coluna única, media primeiro com altura própria */
+    section.slide.split,section.slide.split.rev{display:flex;flex-direction:column;height:auto}
+    .split .text{padding:2.2rem 7vw 0}
+    .split .media{order:-1;width:100%;height:44vh;min-height:280px}
+    .split .media .grad,.split.rev .media .grad{background:linear-gradient(0deg,var(--bg) 0%,transparent 22%)}
+    /* painel do mercado dimensiona-se ao conteúdo */
+    #s3 .media{height:auto;min-height:0}
+    .compare{position:relative;inset:auto;padding:2.5rem 7vw 0}
+    .menu-wrap,.statement .content,.process .content,.pacotes .content{padding:0 7vw}
+    .menu-cols{grid-template-columns:1fr;gap:2rem}
+    .timeline{grid-template-columns:1fr;gap:1rem}
+    /* linha vertical a ligar as bolinhas no telemóvel */
+    .timeline:before{left:7px;right:auto;top:10px;bottom:24px;width:1px;height:auto}
+    .step{padding:0 0 0 2rem}
+    .step:before{top:2px}
+    .num{left:1.4rem;top:1.6rem}
+    a.back{position:static;order:10;align-self:flex-start;margin:1.8rem 7vw 0;display:inline-block}
+    nav.dots{display:none}
+    .tip-grid{grid-template-columns:1fr 1fr}
+    .capa .content{margin-top:14vh}
+    .capa .sub .subq{display:block}
+  }
+</style>
+</head>
+<body>
+<main id="deck">
+
+  <!-- 01 · CAPA -->
+  <section class="slide hero capa" id="s1">
+    <div class="bgimg" style="background-image:url('img/01-capa.jpg')"></div>
+    <div class="veil"></div>
+    <div class="content">
+      <img class="logo" src="img/00-logo-branco.png" alt="AfteREC">
+      <h1>Film</h1>
+      <div class="rule"></div>
+      <p class="sub">Um serviço de produção de cinema, <span class="subq">do videoclipe à longa-metragem.</span></p>
+    </div>
+  </section>
+
+  <!-- 02 · QUEM SOMOS -->
+  <section class="slide statement" id="s2">
+    <div class="num">02 · A AFTEREC</div>
+    <div class="content">
+      <div class="kicker">Quem somos</div>
+      <h2>Produção de cinema, <em>em qualquer formato</em>.</h2>
+      <p class="body">A AfteREC é uma <strong>produtora de cinema</strong>. O AfteREC Film é o serviço que dá vida a projetos cinematográficos, seja qual for o formato: <strong>videoclipes, publicidade, vídeos de YouTube, documentários, curtas e longas-metragens</strong>. Para cada projeto montamos a estrutura de produção completa, do planeamento à equipa técnica, da logística de rodagem à pós-produção, com controlo criativo do primeiro dia ao último.<br><br>Trabalhamos com <strong>artistas e labels, marcas e agências, e produtores independentes</strong> que procuram um parceiro único a centralizar decisão e execução: padrão de cinema, custos controlados e prazos previsíveis, sem a fricção de coordenar vários fornecedores.</p>
+    </div>
+  </section>
+
+  <!-- 03 · O MERCADO -->
+  <section class="slide split rev" id="s3">
+    <div class="num">03 · O MERCADO</div>
+    <div class="media">
+      <div class="compare">
+        <div class="waves">
+          <div class="wlegend">
+            <span class="wl grey"><i></i>Anúncios que usam humor (% do total)</span>
+          </div>
+          <svg viewBox="0 0 720 470" role="img" aria-label="O humor na publicidade caiu cerca de 20 pontos em 20 anos; anúncios com humor são 47% mais memoráveis">
+            <defs>
+              <linearGradient id="gGrey" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#f4f2ee" stop-opacity=".38"/>
+                <stop offset="1" stop-color="#f4f2ee" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <g stroke="rgba(244,242,238,.09)" stroke-width="1">
+              <line x1="60" y1="110" x2="700" y2="110"/>
+              <line x1="60" y1="210" x2="700" y2="210"/>
+              <line x1="60" y1="310" x2="700" y2="310"/>
+            </g>
+            <g font-family="Archivo,Arial,sans-serif" font-size="13" fill="rgba(244,242,238,.35)">
+              <text x="26" y="114">55%</text>
+              <text x="26" y="214">45%</text>
+              <text x="26" y="314">35%</text>
+              <text x="60" y="462">2004</text>
+              <text x="365" y="462">2014</text>
+              <text x="662" y="462">2024</text>
+            </g>
+            <path d="M60,120 C110,126 150,138 200,152 C260,169 310,182 380,205 C450,228 510,258 570,290 C615,314 660,330 700,338 L700,440 L60,440 Z" fill="url(#gGrey)"/>
+            <path d="M60,120 C110,126 150,138 200,152 C260,169 310,182 380,205 C450,228 510,258 570,290 C615,314 660,330 700,338" fill="none" stroke="rgba(244,242,238,.55)" stroke-width="2"/>
+            <circle cx="700" cy="338" r="4.5" fill="#f90000" filter="drop-shadow(0 0 10px rgba(249,0,0,.6))"/>
+            <g font-family="Archivo,Arial,sans-serif" font-size="13.5" fill="rgba(244,242,238,.72)">
+              <text x="80" y="255">O humor na publicidade caiu</text>
+              <text x="80" y="273">cerca de 20 pontos em 20 anos:</text>
+              <text x="80" y="291">hoje só 1 em cada 3 anúncios o usa.</text>
+              <text x="80" y="330" fill="#ff3b30">E no entanto, um anúncio com humor</text>
+              <text x="80" y="348" fill="#ff3b30">é 47% mais memorável do que um sério.</text>
+            </g>
+          </svg>
+          <p class="fonte">Fontes: Kantar, evolução do humor na publicidade. Nielsen/Kantar, memorização de anúncios com humor.</p>
+        </div>
+      </div>
+    </div>
+    <div class="text">
+      <div class="kicker">Porque é que isto importa</div>
+      <h2>Num mercado saturado, ninguém se lembra <em>do que é igual</em>.</h2>
+      <p class="body">Todos os minutos entram <strong>mais de 700 horas de vídeo</strong> só no YouTube. O público vê mais conteúdo do que nunca, e lembra-se de cada vez menos. Ao mesmo tempo, a publicidade tornou-se séria: o humor caiu 20 pontos em 20 anos e hoje só um terço dos anúncios o usa (Kantar).<br><br>Os números mostram o custo dessa seriedade: <strong>um anúncio com humor é 47% mais memorável</strong> (Nielsen/Kantar), e metade dos vencedores dos prémios de eficácia criativa da Kantar usa-o. A maior oportunidade do audiovisual está exatamente onde a maioria deixou de olhar: <strong>o que é diferente é o que fica na memória</strong>.</p>
+    </div>
+  </section>
+
+  <!-- 04 · PORQUÊ A AFTEREC -->
+  <section class="slide statement" id="s4">
+    <div class="num">04 · PORQUÊ A AFTEREC</div>
+    <div class="content">
+      <div class="kicker">Porquê trabalhar connosco</div>
+      <h2>Não fazemos mais um. Fazemos <em>melhor diferente</em>.</h2>
+      <p class="body">Há muitas produtoras no mercado, e a maioria entrega o mesmo filme: tecnicamente correto, igual aos outros, esquecido no dia seguinte. A AfteREC traz uma <strong>visão nova</strong>: usamos a <strong>comédia e o estilo narrativo</strong> como ferramentas centrais do que fazemos, porque é isso que prende a atenção e fica na memória. Bebemos das referências do cinema, dos clássicos aos conteúdos mais recentes, e aplicamos essa linguagem a cada projeto, seja um videoclipe, um anúncio ou um filme.<br><br>E montamos a equipa certa para cada projeto, escolhida pelo tipo de conteúdo, procurando entre <strong>os melhores profissionais do mundo</strong>, não apenas os que estão perto: se o filmmaker certo para o seu projeto estiver noutro país, é com ele que trabalha. O que importa é a qualidade e o resultado. Connosco, a qualidade deixa de ser uma preocupação sua e passa a ser uma garantia nossa.</p>
+    </div>
+  </section>
+
+  <!-- 05 · O QUE PRODUZIMOS -->
+  <section class="slide" id="s5">
+    <div class="num">05 · OS FORMATOS</div>
+    <div class="menu-wrap">
+      <div class="kicker">O que produzimos</div>
+      <h2>Um serviço, <em>todos os formatos</em>.</h2>
+      <div class="menu-cols">
+        <div class="menu-col">
+          <h3>Música e marcas</h3>
+          <ul>
+            <li><a href="#s6">Videoclipes</a></li>
+            <li><a href="#s7">Publicidade e spots</a></li>
+            <li><a href="#s7">Vídeos de YouTube</a></li>
+          </ul>
+        </div>
+        <div class="menu-col">
+          <h3>Cinema</h3>
+          <ul>
+            <li><a href="#s8">Documentários</a></li>
+            <li><a href="#s8">Curtas e longas-metragens</a></li>
+            <li><a href="#s8">Séries</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="menu-note">Cada projeto é um projeto: o formato, a escala e a equipa definem-se em conversa. Clique em cada formato para o conhecer, ou <a href="#s10">veja os valores →</a></p>
+    </div>
+  </section>
+
+  <!-- 06 · VIDEOCLIPES -->
+  <section class="slide split" id="s6">
+    <div class="num">06 · VIDEOCLIPES</div>
+    <a class="back" href="#s5">← O que produzimos</a>
+    <div class="text">
+      <div class="kicker">Videoclipes</div>
+      <h2>A imagem que fica <em>colada à música</em>.</h2>
+      <p class="body">O videoclipe é a peça que define a imagem de um artista: é o que o público vê sempre que a música toca. Trabalhamos o conceito com o artista e a label, do tratamento criativo ao guião técnico, e produzimos com equipa de cinema: realização, direção de fotografia, som, direção de arte e casting quando o projeto pede. Já produzimos videoclipes para artistas de uma editora major internacional.<br><br>A narrativa é a nossa assinatura: um videoclipe não é uma sequência de planos bonitos, é uma história que dá à música uma segunda vida. O ciclo típico corre em <strong>5 a 8 semanas</strong>, do briefing à entrega dos masters, com versões prontas para cada canal.</p>
+    </div>
+    <div class="media">
+      <div class="bgimg" style="background-image:url('img/06-videoclipe.jpg')"></div>
+      <div class="grad"></div>
+    </div>
+  </section>
+
+  <!-- 07 · PUBLICIDADE E YOUTUBE -->
+  <section class="slide split rev" id="s7">
+    <div class="num">07 · PUBLICIDADE</div>
+    <a class="back" href="#s5">← O que produzimos</a>
+    <div class="media">
+      <div class="bgimg" style="background-image:url('img/07-publicidade.jpg')"></div>
+      <div class="grad"></div>
+    </div>
+    <div class="text">
+      <div class="kicker">Publicidade, spots e vídeos de YouTube</div>
+      <h2>O anúncio de que as pessoas <em>se lembram</em>.</h2>
+      <p class="body">Spots de TV, campanhas digitais e vídeos de YouTube: é aqui que a comédia e a narrativa mais pagam, porque <strong>um anúncio com humor é 47% mais memorável do que um sério</strong>. Escrevemos o guião orientado ao objetivo da campanha, você aprova antes de qualquer rodagem, e entregamos masters prontos para broadcast e versões para cada plataforma.<br><br>Nos vídeos de YouTube o formato é outro, mas o padrão é o mesmo: produção e montagem pensadas para reter o espectador do primeiro segundo ao último, com uma escala ajustada ao formato e à frequência de publicação.</p>
+    </div>
+  </section>
+
+  <!-- 08 · DOCUMENTÁRIOS E CINEMA -->
+  <section class="slide split" id="s8">
+    <div class="num">08 · CINEMA</div>
+    <a class="back" href="#s5">← O que produzimos</a>
+    <div class="text">
+      <div class="kicker">Documentários, curtas, longas e séries</div>
+      <h2>Histórias com <em>fôlego de cinema</em>.</h2>
+      <p class="body">Os formatos maiores pedem outra estrutura, e nós montamo-la. No documentário, a pesquisa conduz a história: acompanhamos a realidade com equipa dimensionada ao projeto e uma pós-produção onde a narrativa se encontra. Nas curtas, longas e séries, a AfteREC assume a <strong>produção executiva</strong>: desenvolvimento, procura de financiamento, materiais de apresentação e, no fim, a distribuição para festivais e cinemas.<br><br>São projetos de meses, não de semanas, e é para isso que existem: <strong>uma obra que fica</strong>, e que continua a trabalhar pela sua marca, pela sua música ou pela sua história muito depois da estreia.</p>
+    </div>
+    <div class="media">
+      <div class="bgimg" style="background-image:url('img/08-cinema.jpg')"></div>
+      <div class="grad"></div>
+    </div>
+  </section>
+
+  <!-- 09 · PROCESSO -->
+  <section class="slide process" id="s9">
+    <div class="num">09 · PROCESSO</div>
+    <div class="content">
+      <div class="kicker">Como trabalhamos</div>
+      <h2>Cinco fases, <em>qualquer que seja a escala</em>.</h2>
+      <div class="timeline">
+        <div class="step"><h4>Briefing</h4><p>Reunião criativa: visão, referências, orçamento e datas. Proposta com breakdown de custos.</p></div>
+        <div class="step"><h4>Pré-produção</h4><p>Conceito e guião aprovados por si, reperagem, casting, equipa confirmada, folha de serviço.</p></div>
+        <div class="step"><h4>Rodagem</h4><p>Execução por dia, direção no set, captação de imagem e som, backup diário do material.</p></div>
+        <div class="step"><h4>Pós-produção</h4><p>Montagem, 2 rondas de revisão incluídas, mix de som e color grading.</p></div>
+        <div class="step"><h4>Entrega</h4><p>Masters de máxima qualidade + versões por canal.</p></div>
+      </div>
+      <span class="badge">De 4 semanas a vários meses<small>cada formato tem o seu ciclo</small></span>
+      <p class="body" style="margin-top:2rem">Um vídeo de YouTube fecha em 4 a 6 semanas; um videoclipe em 5 a 8; um documentário ou um filme podem pedir meses. O que não muda é o método: <strong>nada avança sem a sua aprovação</strong> nas fases que decidem o resultado (conceito, guião, cortes), o material é protegido com backup diário, e o preço inclui 2 rondas de revisão na pós-produção. O pagamento faz-se normalmente em 50/50, metade no arranque e metade na entrega, conciliado caso a caso com cada cliente.</p>
+    </div>
+  </section>
+
+  <!-- 10 · VALORES -->
+  <section class="slide pacotes" id="s10">
+    <div class="num">10 · VALORES</div>
+    <div class="content">
+      <div class="kicker">Valores</div>
+      <h2>Cada projeto tem a sua escala, <em>e o seu ponto de partida</em>.</h2>
+      <div class="tip-grid">
+        <div class="tip"><h4>Vídeos de YouTube</h4><div class="preco">desde €1.500</div><div class="desc">Produção, captação e montagem, com escala ajustada ao formato e à frequência.</div></div>
+        <div class="tip"><h4>Videoclipes</h4><div class="preco">desde €2.500</div><div class="desc">Equipa de cinema, captação e montagem, com variação conforme o look e a complexidade.</div></div>
+        <div class="tip"><h4>Documentários</h4><div class="preco">desde €6.000</div><div class="desc">Produção, realização e captação, com uma pós-produção mais extensa.</div></div>
+        <div class="tip"><h4>Curtas-metragens</h4><div class="preco">desde €10.000</div><div class="desc">Produção completa e pós completa: montagem, som, cor e masters.</div></div>
+        <div class="tip"><h4>Transmédia</h4><div class="preco">desde €10.000</div><div class="desc">Produção multi-formatos, coordenação editorial e versões por canal.</div></div>
+        <div class="tip"><h4>Spots de TV</h4><div class="preco">desde €15.000</div><div class="desc">Produção completa, equipas técnicas e pós para entrega broadcast.</div></div>
+        <div class="tip"><h4>Séries</h4><div class="preco">desde €50.000 / episódio</div><div class="desc">Estrutura de produção por episódio, com escala variável.</div></div>
+        <div class="tip"><h4>Longas-metragens</h4><div class="preco">desde €150.000</div><div class="desc">Produção de escala maior, com logística e equipas completas.</div></div>
+      </div>
+      <p class="pk-note">Valores sem IVA e de partida: o orçamento de cada projeto é constituído pelos custos reais envolvidos, dias de rodagem, dimensão da equipa, locações, elenco, equipamento e tempo de pós-produção. O valor final é apresentado em proposta, com o breakdown de custos, após a primeira reunião. <a href="https://cal.com/afterec/discoverycall" target="_blank" rel="noopener">Marcar reunião →</a></p>
+    </div>
+  </section>
+
+  <!-- 11 · CTA -->
+  <section class="slide statement cta" id="s11">
+    <div class="content">
+      <h2>Vamos fazer <em>um filme</em>?</h2>
+      <p class="body" style="margin:0 auto">Conte-nos o projeto: o formato, as referências, as datas e o orçamento com que está a trabalhar. Numa breve reunião percebemos o que precisa e apresentamos o caminho para o concretizar.</p>
+      <a class="btn" href="https://cal.com/afterec/discoverycall" target="_blank" rel="noopener">Marcar reunião</a>
+      <div class="contacts">
+        <a href="mailto:before@afterec.com">before@afterec.com</a><br>
+        +351 939 842 928
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<nav class="dots" id="dots"></nav>
+
+<a class="downarrow" id="downarrow" href="#s2" title="Continuar">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+</a>
+
+<script>
+  const slides=[...document.querySelectorAll('section.slide')];
+  const dots=document.getElementById('dots');
+  slides.forEach((s,i)=>{
+    const a=document.createElement('a');
+    a.href='#'+s.id;a.title='Slide '+(i+1);
+    dots.appendChild(a);
+  });
+  const links=[...dots.children];
+  const arrow=document.getElementById('downarrow');
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        const i=slides.indexOf(e.target);
+        links.forEach(l=>l.classList.remove('active'));
+        links[i].classList.add('active');
+        if(i>=slides.length-1){arrow.classList.add('hidden')}
+        else{arrow.classList.remove('hidden');arrow.href='#'+slides[i+1].id}
+      }
+    });
+  },{threshold:.55});
+  slides.forEach(s=>obs.observe(s));
+  // slideshow com crossfade nas células .fadeset (4 s por imagem, células desfasadas)
+  document.querySelectorAll('.fadeset').forEach((set,idx)=>{
+    const ls=[...set.querySelectorAll('.fl')];
+    if(ls.length<2)return;
+    let i=0,z=1;
+    setTimeout(()=>{setInterval(()=>{
+      const prev=ls[i];i=(i+1)%ls.length;const next=ls[i];
+      next.style.zIndex=++z;next.classList.add('on');
+      setTimeout(()=>prev.classList.remove('on'),1300);
+    },4000)},idx*2000);
+  });
+  // navegação por teclado
+  document.addEventListener('keydown',e=>{
+    const cur=slides.findIndex(s=>{const r=s.getBoundingClientRect();return r.top>=-10&&r.top<10});
+    if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){e.preventDefault();slides[Math.min(cur+1,slides.length-1)]?.scrollIntoView()}
+    if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();slides[Math.max(cur-1,0)]?.scrollIntoView()}
+  });
+  /* Sistema multilingue: entra depois do OK do Founder à versão PT (replicar do template da Apresentação Corporate). */
+</script>
+</body>
+</html>
